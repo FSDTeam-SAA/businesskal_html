@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Businesskal — Multi-Vendor Marketplace</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --orange:#E59600;
+  --orange-dark:#c47f00;
+  --orange-light:#FFB733;
+  --orange-pale:#FFF3D6;
+  --white:#ffffff;
+  --cream:#FAFAF7;
+  --gray-50:#F8F9FA;
+  --gray-100:#F1F3F5;
+  --gray-200:#E9ECEF;
+  --gray-400:#ADB5BD;
+  --gray-600:#6C757D;
+  --dark:#1A1A2E;
+  --dark-2:#16213E;
+  --charcoal:#2D2D2D;
+  --green:#22C55E;
+  --shadow-sm:0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md:0 8px 24px rgba(0,0,0,0.10);
+  --shadow-lg:0 20px 60px rgba(0,0,0,0.14);
+  --shadow-orange:0 8px 32px rgba(229,150,0,0.28);
+  --radius-sm:8px;
+  --radius-md:16px;
+  --radius-lg:24px;
+  --radius-xl:32px;
+  --font:Poppins,Inter,system-ui,sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--font);color:var(--charcoal);background:var(--white);overflow-x:hidden;line-height:1.6}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+button{cursor:pointer;border:none;outline:none;font-family:var(--font)}
+
+/* ── UTILITIES ── */
+.container{max-width:1280px;margin:0 auto;padding:0 24px}
+.flex{display:flex}.grid{display:grid}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:50px;font-weight:600;font-size:15px;transition:all .25s ease;white-space:nowrap}
+.btn-primary{background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#fff;box-shadow:var(--shadow-orange)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(229,150,0,.38)}
+.btn-outline{background:transparent;color:var(--orange);border:2px solid var(--orange)}
+.btn-outline:hover{background:var(--orange);color:#fff;transform:translateY(-2px)}
+.btn-white{background:#fff;color:var(--orange);box-shadow:var(--shadow-md)}
+.btn-white:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.btn-ghost{background:rgba(255,255,255,0.15);color:#fff;border:1.5px solid rgba(255,255,255,0.4);backdrop-filter:blur(8px)}
+.btn-ghost:hover{background:rgba(255,255,255,0.25)}
+.section-tag{display:inline-flex;align-items:center;gap:6px;background:var(--orange-pale);color:var(--orange-dark);font-weight:600;font-size:13px;letter-spacing:.5px;padding:6px 16px;border-radius:50px;margin-bottom:16px;text-transform:uppercase}
+.section-title{font-size:clamp(28px,4vw,44px);font-weight:800;color:var(--dark);line-height:1.2;letter-spacing:-0.5px}
+.section-sub{font-size:17px;color:var(--gray-600);line-height:1.7;max-width:560px}
+.text-center{text-align:center}.text-center .section-sub{margin:0 auto}
+.gradient-text{background:linear-gradient(135deg,var(--orange),#FF6B35);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* ── NAVBAR ── */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 0;transition:all .3s ease}
+.navbar.scrolled{background:rgba(255,255,255,.95);backdrop-filter:blur(20px);box-shadow:0 2px 20px rgba(0,0,0,.08);padding:10px 0}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:32px}
+.nav-logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:22px;color:var(--dark)}
+.nav-logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--orange),var(--orange-dark));border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none}
+.nav-links a{padding:8px 14px;border-radius:8px;font-size:14px;font-weight:500;color:var(--charcoal);transition:all .2s}
+.nav-links a:hover{background:var(--orange-pale);color:var(--orange)}
+.nav-cta{display:flex;align-items:center;gap:10px}
+.nav-cta .btn{padding:10px 20px;font-size:14px}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.nav-hamburger span{width:24px;height:2px;background:var(--dark);border-radius:2px;transition:.3s}
+.mobile-menu{display:none;position:fixed;top:70px;left:0;right:0;background:#fff;padding:20px 24px;box-shadow:var(--shadow-lg);z-index:999;flex-direction:column;gap:8px}
+.mobile-menu a{padding:12px 16px;border-radius:10px;font-weight:500;display:block;transition:.2s}
+.mobile-menu a:hover{background:var(--orange-pale);color:var(--orange)}
+.mobile-menu.open{display:flex}
+
+/* ── HERO ── */
+.hero{min-height:100vh;padding:120px 0 80px;background:linear-gradient(135deg,#FFF8E7 0%,#FFFBF0 40%,#FFF0CC 100%);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(229,150,0,.18) 0%,transparent 70%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-100px;left:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(229,150,0,.12) 0%,transparent 70%);pointer-events:none}
+.hero-shape1{position:absolute;top:10%;left:5%;width:60px;height:60px;background:linear-gradient(135deg,var(--orange),var(--orange-light));border-radius:16px;opacity:.2;transform:rotate(15deg);animation:float1 6s ease-in-out infinite}
+.hero-shape2{position:absolute;bottom:20%;left:10%;width:40px;height:40px;background:var(--orange);border-radius:50%;opacity:.15;animation:float2 8s ease-in-out infinite}
+.hero-shape3{position:absolute;top:30%;right:42%;width:24px;height:24px;background:var(--orange-light);border-radius:8px;opacity:.25;transform:rotate(30deg);animation:float1 7s ease-in-out infinite .5s}
+@keyframes float1{0%,100%{transform:rotate(15deg) translateY(0)}50%{transform:rotate(15deg) translateY(-20px)}}
+@keyframes float2{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-15px) scale(1.05)}}
+.hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(229,150,0,.12);border:1.5px solid rgba(229,150,0,.3);color:var(--orange-dark);font-size:13px;font-weight:600;padding:8px 18px;border-radius:50px;margin-bottom:24px}
+.hero-badge .dot{width:8px;height:8px;background:var(--orange);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.hero-title{font-size:clamp(36px,5vw,62px);font-weight:900;color:var(--dark);line-height:1.1;letter-spacing:-1px;margin-bottom:20px}
+.hero-title span{display:block}
+.hero-sub{font-size:18px;color:var(--gray-600);line-height:1.7;margin-bottom:36px;max-width:480px}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:48px}
+.hero-trust{display:flex;align-items:center;gap:16px}
+.trust-avatars{display:flex}
+.trust-avatars img,.trust-avatar{width:36px;height:36px;border-radius:50%;border:2.5px solid #fff;margin-left:-10px;object-fit:cover;background:linear-gradient(135deg,var(--orange),var(--orange-light))}
+.trust-avatars .trust-avatar:first-child{margin-left:0}
+.trust-avatar{display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700}
+.trust-text{font-size:13px;color:var(--gray-600)}.trust-text strong{color:var(--dark);display:block;font-weight:700}
+/* hero visual */
+.hero-visual{position:relative;height:580px}
+.hero-phone-main{position:absolute;right:80px;top:20px;width:220px;background:#1A1A2E;border-radius:36px;padding:8px;box-shadow:var(--shadow-lg),0 0 80px rgba(229,150,0,.15);z-index:3;animation:float2 6s ease-in-out infinite}
+.phone-screen{background:linear-gradient(160deg,#fff 0%,#f8f9fa 100%);border-radius:28px;overflow:hidden;padding:16px 12px}
+.phone-status{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.phone-time{font-size:11px;font-weight:700;color:var(--dark)}
+.phone-icons{display:flex;gap:4px;font-size:9px;color:var(--dark)}
+.phone-search{background:var(--gray-100);border-radius:20px;padding:8px 12px;font-size:10px;color:var(--gray-600);display:flex;align-items:center;gap:6px;margin-bottom:12px}
+.phone-cats{display:flex;gap:6px;margin-bottom:12px;overflow:hidden}
+.cat-chip{background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#fff;font-size:8px;font-weight:600;padding:4px 10px;border-radius:20px;white-space:nowrap}
+.cat-chip.light{background:var(--gray-100);color:var(--gray-600)}
+.phone-cards{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.phone-card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.phone-card-img{height:48px;background:linear-gradient(135deg,#FFE4A0,#FFB733);display:flex;align-items:center;justify-content:center;font-size:18px}
+.phone-card-body{padding:6px}
+.phone-card-name{font-size:8px;font-weight:700;color:var(--dark);margin-bottom:2px}
+.phone-card-price{font-size:8px;color:var(--orange);font-weight:700}
+.phone-card-rating{font-size:7px;color:var(--gray-400)}.phone-card-rating i{color:#FBBF24}
+/* floating cards around hero */
+.float-card{position:absolute;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border-radius:var(--radius-md);padding:12px 16px;box-shadow:var(--shadow-md);border:1px solid rgba(255,255,255,.8)}
+.fc-order{top:30px;left:-20px;z-index:4;animation:float1 7s ease-in-out infinite 1s}
+.fc-stats{bottom:140px;left:-40px;z-index:4;animation:float2 8s ease-in-out infinite .5s}
+.fc-chat{top:200px;right:-10px;z-index:4;animation:float1 6s ease-in-out infinite .3s;max-width:180px}
+.fc-notif{bottom:60px;right:20px;z-index:4;animation:float2 7s ease-in-out infinite .8s}
+.fc-label{font-size:10px;font-weight:600;color:var(--gray-600);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.fc-value{font-size:18px;font-weight:800;color:var(--dark)}
+.fc-sub{font-size:11px;color:var(--green);display:flex;align-items:center;gap:4px}
+.fc-order-item{display:flex;align-items:center;gap:8px}
+.fc-order-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
+.fc-order-text{font-size:11px;font-weight:600;color:var(--dark)}
+.fc-order-status{font-size:10px;color:var(--orange);font-weight:500}
+.fc-chat-msg{display:flex;gap:6px;align-items:flex-start;margin-bottom:6px}
+.fc-chat-av{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--orange-light));flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:700}
+.fc-chat-bubble{background:var(--gray-100);border-radius:8px;padding:5px 8px;font-size:10px;color:var(--dark);line-height:1.4;max-width:130px}
+.fc-chat-bubble.sent{background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#fff}
+.fc-notif-row{display:flex;align-items:center;gap:8px}
+.fc-notif-ic{width:28px;height:28px;background:linear-gradient(135deg,var(--orange),var(--orange-dark));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;flex-shrink:0}
+.fc-notif-text{font-size:11px;font-weight:600;color:var(--dark)}
+.fc-notif-sub{font-size:10px;color:var(--gray-600)}
+.mini-chart{display:flex;align-items:flex-end;gap:3px;height:28px;margin-top:6px}
+.mini-bar{width:10px;background:var(--orange-pale);border-radius:3px 3px 0 0;transition:.3s}
+.mini-bar.active{background:linear-gradient(to top,var(--orange-dark),var(--orange-light))}
+
+/* ── STATS ── */
+.stats{padding:80px 0;background:var(--white)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.stat-card{background:var(--white);border-radius:var(--radius-lg);padding:32px 28px;box-shadow:var(--shadow-md);border:1.5px solid var(--gray-100);text-align:center;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s}
+.stat-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--orange),var(--orange-light))}
+.stat-icon{width:56px;height:56px;background:linear-gradient(135deg,var(--orange-pale),#FFE4A0);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:24px;color:var(--orange)}
+.stat-num{font-size:42px;font-weight:900;color:var(--dark);letter-spacing:-1px;line-height:1}
+.stat-label{font-size:15px;color:var(--gray-600);margin-top:6px;font-weight:500}
+.stat-change{display:inline-flex;align-items:center;gap:4px;background:#DCFCE7;color:#16A34A;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;margin-top:10px}
+
+/* ── FEATURES ── */
+.features{padding:100px 0;background:var(--cream)}
+.features-header{text-align:center;margin-bottom:60px}
+.features-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.feat-card{background:rgba(255,255,255,.8);backdrop-filter:blur(20px);border:1.5px solid rgba(255,255,255,.9);border-radius:var(--radius-lg);padding:28px 24px;transition:all .3s ease;position:relative;overflow:hidden}
+.feat-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(229,150,0,.04),transparent);opacity:0;transition:.3s}
+.feat-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg);border-color:rgba(229,150,0,.2)}
+.feat-card:hover::after{opacity:1}
+.feat-icon{width:52px;height:52px;background:linear-gradient(135deg,var(--orange),var(--orange-dark));border-radius:14px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;margin-bottom:16px;flex-shrink:0;box-shadow:0 6px 20px rgba(229,150,0,.3)}
+.feat-title{font-size:16px;font-weight:700;color:var(--dark);margin-bottom:8px}
+.feat-desc{font-size:13px;color:var(--gray-600);line-height:1.6}
+
+/* ── APP SHOWCASE ── */
+.app-showcase{padding:100px 0;background:linear-gradient(135deg,var(--dark) 0%,#0F1628 50%,#1A1A2E 100%);overflow:hidden;position:relative}
+.app-showcase::before{content:'';position:absolute;top:-100px;right:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(229,150,0,.12) 0%,transparent 70%);pointer-events:none}
+.app-header{text-align:center;margin-bottom:60px;position:relative;z-index:1}
+.app-header .section-title{color:#fff}
+.app-header .section-sub{color:rgba(255,255,255,.65)}
+.phones-wrap{display:flex;justify-content:center;align-items:flex-end;gap:20px;position:relative;z-index:1;padding:20px 0 40px;perspective:1000px}
+.phone-mock{width:200px;flex-shrink:0;position:relative;transition:transform .4s ease}
+.phone-mock:hover{transform:translateY(-12px)}
+.phone-mock.center{transform:scale(1.08);z-index:3}
+.phone-mock.center:hover{transform:scale(1.08) translateY(-12px)}
+.phone-mock.left,.phone-mock.right{transform:scale(.9) rotateY(5deg);opacity:.85}
+.phone-mock.left:hover,.phone-mock.right:hover{opacity:1;transform:scale(.9) rotateY(5deg) translateY(-12px)}
+.phone-frame{background:#111;border-radius:36px;padding:10px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.06)}
+.phone-inner{border-radius:26px;overflow:hidden;background:#fff;aspect-ratio:9/19}
+.phone-screen-content{padding:14px 12px;height:100%;display:flex;flex-direction:column;gap:8px}
+.ps-header{display:flex;justify-content:space-between;align-items:center}
+.ps-title{font-size:14px;font-weight:800;color:var(--dark)}
+.ps-notif{width:28px;height:28px;background:var(--orange-pale);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--orange);font-size:11px}
+.ps-greeting{font-size:11px;color:var(--gray-600)}
+.ps-search{background:var(--gray-100);border-radius:20px;padding:9px 12px;display:flex;align-items:center;gap:6px;font-size:10px;color:var(--gray-400)}
+.ps-banner{background:linear-gradient(135deg,var(--orange),#FF8C00);border-radius:14px;padding:14px;color:#fff;display:flex;justify-content:space-between;align-items:center}
+.ps-banner-title{font-size:12px;font-weight:800;line-height:1.3}
+.ps-banner-sub{font-size:9px;opacity:.85;margin-top:2px}
+.ps-banner-ic{font-size:28px;opacity:.7}
+.ps-section-title{font-size:11px;font-weight:700;color:var(--dark)}
+.ps-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.ps-item{background:var(--gray-50);border-radius:10px;overflow:hidden}
+.ps-item-img{height:40px;background:linear-gradient(135deg,#FFE4A0,#FFD580);display:flex;align-items:center;justify-content:center;font-size:16px}
+.ps-item-info{padding:5px 6px}
+.ps-item-name{font-size:8px;font-weight:700;color:var(--dark)}
+.ps-item-price{font-size:9px;color:var(--orange);font-weight:700}
+
+.screen-chat .ps-msg{display:flex;gap:6px;margin-bottom:8px}
+.ps-msg-av{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--orange-light));flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:9px;font-weight:700}
+.ps-msg-bubble{background:var(--gray-100);border-radius:10px;padding:6px 9px;font-size:9px;color:var(--dark);max-width:120px;line-height:1.4}
+.ps-msg.sent{flex-direction:row-reverse}
+.ps-msg.sent .ps-msg-bubble{background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#fff}
+
+.screen-booking .ps-service{background:var(--gray-50);border-radius:10px;padding:8px;display:flex;gap:8px;align-items:center;margin-bottom:6px}
+.ps-service-ic{width:32px;height:32px;background:linear-gradient(135deg,var(--orange),var(--orange-dark));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;flex-shrink:0}
+.ps-service-name{font-size:10px;font-weight:700;color:var(--dark)}
+.ps-service-price{font-size:9px;color:var(--orange);font-weight:600}
+.ps-service-rating{font-size:8px;color:var(--gray-400)}.ps-service-rating i{color:#FBBF24}
+.ps-book-btn{width:100%;background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#fff;border:none;border-radius:10px;padding:8px;font-size:10px;font-weight:700;cursor:pointer;font-family:var(--font)}
+
+.app-store-btns{display:flex;justify-content:center;gap:16px;margin-top:48px;flex-wrap:wrap;position:relative;z-index:1}
+.store-btn{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.2);border-radius:14px;padding:12px 22px;color:#fff;transition:all .3s;backdrop-filter:blur(8px)}
+.store-btn:hover{background:rgba(255,255,255,.15);transform:translateY(-3px)}
+.store-btn i{font-size:26px}
+.store-btn-text small{display:block;font-size:10px;opacity:.7;text-transform:uppercase;letter-spacing:.5px}
+.store-btn-text strong{display:block;font-size:16px;font-weight:700}
+
+/* ── DASHBOARD ── */
+.dashboard{padding:100px 0;background:var(--white)}
+.dash-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.dash-preview{background:var(--gray-50);border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow-lg);border:1.5px solid var(--gray-200);position:relative}
+.dash-topbar{background:var(--white);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--gray-100)}
+.dash-logo-bar{display:flex;align-items:center;gap:8px;font-weight:800;font-size:14px;color:var(--dark)}
+.dash-logo-dot{width:8px;height:8px;border-radius:50%;background:var(--orange)}
+.dash-actions{display:flex;gap:8px}
+.dash-action-btn{width:26px;height:26px;border-radius:6px;border:1px solid var(--gray-200);background:var(--white);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--gray-600)}
+.dash-body{display:grid;grid-template-columns:160px 1fr;min-height:320px}
+.dash-sidebar{background:var(--white);border-right:1px solid var(--gray-100);padding:16px 12px;display:flex;flex-direction:column;gap:4px}
+.dash-nav-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;font-size:11px;font-weight:500;color:var(--gray-600);cursor:pointer;transition:.2s}
+.dash-nav-item.active{background:var(--orange-pale);color:var(--orange-dark)}
+.dash-nav-item.active i{color:var(--orange)}
+.dash-nav-item i{font-size:12px;width:14px;text-align:center}
+.dash-content{padding:16px;display:flex;flex-direction:column;gap:12px;overflow:hidden}
+.dash-rev-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.dash-rev-card{background:var(--white);border-radius:10px;padding:10px 12px;border:1px solid var(--gray-100)}
+.dash-rev-label{font-size:9px;color:var(--gray-600);font-weight:500;margin-bottom:4px}
+.dash-rev-val{font-size:16px;font-weight:800;color:var(--dark)}
+.dash-rev-badge{display:inline-flex;align-items:center;gap:2px;font-size:8px;color:var(--green);font-weight:600;margin-top:2px}
+.dash-chart{background:var(--white);border-radius:10px;padding:12px;border:1px solid var(--gray-100)}
+.dash-chart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.dash-chart-title{font-size:11px;font-weight:700;color:var(--dark)}
+.chart-bars{display:flex;align-items:flex-end;gap:4px;height:56px}
+.chart-bar{flex:1;border-radius:4px 4px 0 0;background:var(--gray-100);transition:.5s}
+.chart-bar.fill{background:linear-gradient(to top,var(--orange-dark),var(--orange-light))}
+.dash-orders{background:var(--white);border-radius:10px;border:1px solid var(--gray-100);overflow:hidden}
+.dash-orders-head{padding:8px 12px;border-bottom:1px solid var(--gray-100);font-size:10px;font-weight:700;color:var(--dark)}
+.dash-order-row{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:8px;padding:7px 12px;border-bottom:1px solid var(--gray-50);font-size:9px}
+.dash-order-row:last-child{border-bottom:none}
+.order-id{font-weight:700;color:var(--dark)}
+.order-name{color:var(--gray-600)}
+.order-amount{font-weight:700;color:var(--dark)}
+.order-badge{padding:3px 8px;border-radius:20px;font-weight:600;font-size:8px}
+.badge-paid{background:#DCFCE7;color:#16A34A}
+.badge-pending{background:#FEF3C7;color:#D97706}
+.badge-shipping{background:#DBEAFE;color:#2563EB}
+
+/* ── HOW IT WORKS ── */
+.how{padding:100px 0;background:var(--cream)}
+.how-header{text-align:center;margin-bottom:64px}
+.steps-wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+.steps-wrap::before{content:'';position:absolute;top:52px;left:calc(12.5% + 28px);right:calc(12.5% + 28px);height:3px;background:linear-gradient(90deg,var(--orange),var(--orange-light),var(--orange));z-index:0;border-radius:3px}
+.step{text-align:center;padding:0 16px;position:relative;z-index:1}
+.step-num-wrap{position:relative;display:inline-flex;margin-bottom:20px}
+.step-circle{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#fff;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(229,150,0,.35);margin:0 auto}
+.step-icon-badge{position:absolute;top:-4px;right:-4px;width:22px;height:22px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--orange);box-shadow:var(--shadow-sm)}
+.step-title{font-size:18px;font-weight:800;color:var(--dark);margin-bottom:10px}
+.step-desc{font-size:14px;color:var(--gray-600);line-height:1.6}
+
+/* ── MARKETPLACE ── */
+.marketplace{padding:100px 0;background:var(--white)}
+.market-header{text-align:center;margin-bottom:48px}
+.cat-filters{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:40px}
+.cat-filter{padding:9px 20px;border-radius:50px;border:1.5px solid var(--gray-200);background:var(--white);font-size:13px;font-weight:600;color:var(--gray-600);cursor:pointer;transition:.2s;font-family:var(--font)}
+.cat-filter.active,.cat-filter:hover{background:var(--orange);border-color:var(--orange);color:#fff}
+.market-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.market-card{background:var(--white);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);border:1.5px solid var(--gray-100);transition:all .3s;position:relative}
+.market-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.card-img{height:160px;background:linear-gradient(135deg,#FFE4A0,#FFD580);display:flex;align-items:center;justify-content:center;font-size:48px;position:relative;overflow:hidden}
+.card-img.service{background:linear-gradient(135deg,#E0F2FE,#BAE6FD)}
+.card-img.food{background:linear-gradient(135deg,#FCE7F3,#FBCFE8)}
+.card-img.fashion{background:linear-gradient(135deg,#F3E8FF,#DDD6FE)}
+.card-fav{position:absolute;top:12px;right:12px;width:32px;height:32px;background:rgba(255,255,255,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:var(--gray-400);transition:.2s;box-shadow:var(--shadow-sm)}
+.card-fav:hover,.card-fav.active{color:#EF4444}
+.card-badge{position:absolute;top:12px;left:12px;background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#fff;font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px}
+.card-body{padding:16px}
+.card-seller{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.seller-av{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--orange-light));display:flex;align-items:center;justify-content:center;color:#fff;font-size:9px;font-weight:700}
+.seller-name{font-size:11px;color:var(--gray-600)}
+.card-title{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:6px;line-height:1.3}
+.card-rating{display:flex;align-items:center;gap:4px;margin-bottom:10px}
+.stars{color:#FBBF24;font-size:11px}
+.rating-num{font-size:11px;color:var(--gray-600)}
+.card-footer{display:flex;align-items:center;justify-content:space-between}
+.card-price{font-size:18px;font-weight:800;color:var(--orange)}
+.card-price small{font-size:11px;color:var(--gray-400);font-weight:400}
+.add-cart-btn{width:34px;height:34px;background:linear-gradient(135deg,var(--orange),var(--orange-dark));border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;border:none;cursor:pointer;transition:.2s;box-shadow:0 4px 12px rgba(229,150,0,.3)}
+.add-cart-btn:hover{transform:scale(1.1)}
+
+/* ── TESTIMONIALS ── */
+.testimonials{padding:100px 0;background:var(--cream);overflow:hidden}
+.test-header{text-align:center;margin-bottom:56px}
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.test-card{background:var(--white);border-radius:var(--radius-lg);padding:28px;box-shadow:var(--shadow-md);border:1.5px solid var(--gray-100);transition:transform .3s}
+.test-card:hover{transform:translateY(-6px)}
+.test-stars{display:flex;gap:3px;margin-bottom:16px}
+.test-stars i{color:#FBBF24;font-size:14px}
+.test-text{font-size:15px;color:var(--charcoal);line-height:1.7;margin-bottom:20px;font-style:italic}
+.test-user{display:flex;align-items:center;gap:12px}
+.test-av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--orange-light));display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;font-weight:700;flex-shrink:0}
+.test-name{font-weight:700;color:var(--dark);font-size:15px}
+.test-role{font-size:12px;color:var(--gray-600)}
+.test-quote{font-size:48px;color:var(--orange-pale);font-weight:900;line-height:.8;margin-bottom:8px;display:block}
+
+/* ── CTA BANNER ── */
+.cta-banner{padding:100px 0;background:linear-gradient(135deg,#E59600 0%,#FF8C00 40%,#D97706 100%);position:relative;overflow:hidden}
+.cta-banner::before{content:'';position:absolute;top:-50%;right:-5%;width:500px;height:500px;background:rgba(255,255,255,.08);border-radius:50%}
+.cta-banner::after{content:'';position:absolute;bottom:-50%;left:5%;width:400px;height:400px;background:rgba(255,255,255,.06);border-radius:50%}
+.cta-banner-inner{text-align:center;position:relative;z-index:1}
+.cta-banner-title{font-size:clamp(32px,5vw,56px);font-weight:900;color:#fff;letter-spacing:-1px;margin-bottom:16px}
+.cta-banner-sub{font-size:18px;color:rgba(255,255,255,.85);margin-bottom:36px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.6}
+.cta-banner-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.cta-float-shape{position:absolute;border-radius:50%;opacity:.1;background:#fff;animation:float2 8s ease-in-out infinite}
+.cfs1{width:120px;height:120px;top:10%;left:8%;animation-delay:0s}
+.cfs2{width:60px;height:60px;top:60%;left:3%;animation-delay:1s}
+.cfs3{width:80px;height:80px;top:15%;right:6%;animation-delay:.5s}
+.cfs4{width:40px;height:40px;bottom:15%;right:12%;animation-delay:1.5s}
+
+/* ── FOOTER ── */
+footer{background:var(--dark-2);color:rgba(255,255,255,.75);padding:72px 0 0}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+.footer-brand .nav-logo{color:#fff;margin-bottom:16px}
+.footer-brand p{font-size:14px;line-height:1.7;color:rgba(255,255,255,.55);max-width:280px;margin-bottom:20px}
+.social-links{display:flex;gap:10px}
+.social-link{width:36px;height:36px;background:rgba(255,255,255,.08);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.7);font-size:15px;transition:.2s}
+.social-link:hover{background:var(--orange);color:#fff;transform:translateY(-2px)}
+.footer-col h4{font-size:14px;font-weight:700;color:#fff;margin-bottom:16px;text-transform:uppercase;letter-spacing:.5px}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-links a{font-size:14px;color:rgba(255,255,255,.55);transition:.2s}
+.footer-links a:hover{color:var(--orange);padding-left:4px}
+.footer-contact{display:flex;flex-direction:column;gap:12px}
+.contact-item{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:rgba(255,255,255,.55)}
+.contact-item i{color:var(--orange);margin-top:2px;flex-shrink:0}
+.newsletter{margin-top:8px}
+.newsletter p{font-size:13px;color:rgba(255,255,255,.55);margin-bottom:12px;line-height:1.5}
+.newsletter-form{display:flex;gap:8px}
+.newsletter-input{flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:10px 14px;color:#fff;font-size:13px;font-family:var(--font);outline:none;transition:.2s}
+.newsletter-input::placeholder{color:rgba(255,255,255,.35)}
+.newsletter-input:focus{border-color:var(--orange)}
+.newsletter-btn{background:var(--orange);color:#fff;border:none;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);transition:.2s}
+.newsletter-btn:hover{background:var(--orange-dark)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding:20px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-size:13px;color:rgba(255,255,255,.35)}
+.footer-bottom a{color:var(--orange)}
+.footer-bottom-links{display:flex;gap:20px}
+.footer-bottom-links a{font-size:13px;color:rgba(255,255,255,.35);transition:.2s}
+.footer-bottom-links a:hover{color:var(--orange)}
+
+/* ── SCROLL ANIMATIONS ── */
+.fade-up{opacity:0;transform:translateY(32px);transition:opacity .6s ease,transform .6s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+.fade-in{opacity:0;transition:opacity .7s ease}
+.fade-in.visible{opacity:1}
+.stagger .fade-up:nth-child(1){transition-delay:.05s}
+.stagger .fade-up:nth-child(2){transition-delay:.12s}
+.stagger .fade-up:nth-child(3){transition-delay:.19s}
+.stagger .fade-up:nth-child(4){transition-delay:.26s}
+.stagger .fade-up:nth-child(5){transition-delay:.33s}
+.stagger .fade-up:nth-child(6){transition-delay:.4s}
+.stagger .fade-up:nth-child(7){transition-delay:.47s}
+.stagger .fade-up:nth-child(8){transition-delay:.54s}
+.stagger .fade-up:nth-child(9){transition-delay:.61s}
+.stagger .fade-up:nth-child(10){transition-delay:.68s}
+.stagger .fade-up:nth-child(11){transition-delay:.75s}
+.stagger .fade-up:nth-child(12){transition-delay:.82s}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){
+  .features-grid{grid-template-columns:repeat(3,1fr)}
+  .market-grid{grid-template-columns:repeat(3,1fr)}
+  .dash-body{grid-template-columns:1fr}
+  .dash-sidebar{display:none}
+}
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;text-align:center}
+  .hero-visual{display:none}
+  .hero-sub,.hero-btns,.hero-trust{margin-left:auto;margin-right:auto}
+  .hero-btns{justify-content:center}
+  .hero-trust{justify-content:center}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .features-grid{grid-template-columns:repeat(2,1fr)}
+  .market-grid{grid-template-columns:repeat(2,1fr)}
+  .test-grid{grid-template-columns:1fr 1fr}
+  .steps-wrap{grid-template-columns:1fr 1fr;gap:32px}
+  .steps-wrap::before{display:none}
+  .dash-inner{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .phones-wrap .phone-mock{width:160px}
+}
+@media(max-width:640px){
+  .nav-links,.nav-cta{display:none}
+  .nav-hamburger{display:flex}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .features-grid{grid-template-columns:1fr 1fr}
+  .market-grid{grid-template-columns:1fr 1fr}
+  .test-grid{grid-template-columns:1fr}
+  .steps-wrap{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .phones-wrap{gap:10px}
+  .phones-wrap .phone-mock.left,.phones-wrap .phone-mock.right{display:none}
+  .dash-rev-cards{grid-template-columns:1fr 1fr}
+}
+@media(max-width:420px){
+  .features-grid{grid-template-columns:1fr}
+  .market-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr}
+  .hero-btns{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ NAVBAR ═══════════════ -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-icon"><i class="fas fa-store"></i></div>
+        <span>Businesskal</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#sellers">Sellers</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="#" class="btn btn-outline">Get Started</a>
+        <a href="#cta" class="btn btn-primary">Become a Seller</a>
+      </div>
+      <div class="nav-hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#hero" onclick="toggleMenu()">Home</a>
+    <a href="#features" onclick="toggleMenu()">Features</a>
+    <a href="#services" onclick="toggleMenu()">Services</a>
+    <a href="#products" onclick="toggleMenu()">Products</a>
+    <a href="#cta" onclick="toggleMenu()">Become a Seller</a>
+    <a href="#contact" onclick="toggleMenu()">Contact</a>
+    <div style="display:flex;gap:10px;padding:8px 16px">
+      <a href="#" class="btn btn-outline" style="flex:1;justify-content:center">Get Started</a>
+      <a href="#cta" class="btn btn-primary" style="flex:1;justify-content:center">Seller</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-shape1"></div>
+  <div class="hero-shape2"></div>
+  <div class="hero-shape3"></div>
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-content fade-up visible">
+        <div class="hero-badge">
+          <span class="dot"></span>
+          #1 Multi-Vendor Marketplace Platform
+        </div>
+        <h1 class="hero-title">
+          <span>Everything You</span>
+          <span>Need in <span class="gradient-text">One Marketplace</span></span>
+        </h1>
+        <p class="hero-sub">Buy products, book services, chat with sellers, manage orders, and grow your business with our smart digital marketplace platform.</p>
+        <div class="hero-btns">
+          <a href="#app" class="btn btn-primary"><i class="fas fa-mobile-alt"></i> Download App</a>
+          <a href="#products" class="btn btn-outline"><i class="fas fa-compass"></i> Explore Marketplace</a>
+        </div>
+        <div class="hero-trust">
+          <div class="trust-avatars">
+            <div class="trust-avatar" style="background:linear-gradient(135deg,#FF6B6B,#FF8E53)">A</div>
+            <div class="trust-avatar" style="background:linear-gradient(135deg,#4ECDC4,#44A08D)">B</div>
+            <div class="trust-avatar" style="background:linear-gradient(135deg,#667EEA,#764BA2)">C</div>
+            <div class="trust-avatar" style="background:linear-gradient(135deg,var(--orange),var(--orange-light))">D</div>
+          </div>
+          <div class="trust-text">
+            <strong>10,000+ Happy Users</strong>
+            Trusted by buyers & sellers globally
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <!-- main phone -->
+        <div class="hero-phone-main">
+          <div class="phone-screen">
+            <div class="phone-status">
+              <span class="phone-time">9:41</span>
+              <div class="phone-icons"><i class="fas fa-wifi"></i><i class="fas fa-battery-three-quarters"></i></div>
+            </div>
+            <div class="phone-search"><i class="fas fa-search" style="color:var(--gray-400)"></i> Search products, services…</div>
+            <div class="phone-cats">
+              <span class="cat-chip">All</span>
+              <span class="cat-chip light">Electronics</span>
+              <span class="cat-chip light">Food</span>
+              <span class="cat-chip light">Services</span>
+            </div>
+            <div class="phone-cards">
+              <div class="phone-card"><div class="phone-card-img">📱</div><div class="phone-card-body"><div class="phone-card-name">iPhone Case</div><div class="phone-card-price">$12.99</div><div class="phone-card-rating"><i class="fas fa-star"></i> 4.8</div></div></div>
+              <div class="phone-card"><div class="phone-card-img">🎧</div><div class="phone-card-body"><div class="phone-card-name">Earbuds Pro</div><div class="phone-card-price">$49.99</div><div class="phone-card-rating"><i class="fas fa-star"></i> 4.9</div></div></div>
+              <div class="phone-card"><div class="phone-card-img">👕</div><div class="phone-card-body"><div class="phone-card-name">Casual Shirt</div><div class="phone-card-price">$24.00</div><div class="phone-card-rating"><i class="fas fa-star"></i> 4.7</div></div></div>
+              <div class="phone-card"><div class="phone-card-img">🍕</div><div class="phone-card-body"><div class="phone-card-name">Pizza Combo</div><div class="phone-card-price">$18.50</div><div class="phone-card-rating"><i class="fas fa-star"></i> 5.0</div></div></div>
+            </div>
+          </div>
+        </div>
+        <!-- floating cards -->
+        <div class="float-card fc-order">
+          <div class="fc-label">New Order</div>
+          <div class="fc-order-item">
+            <div class="fc-order-dot"></div>
+            <div>
+              <div class="fc-order-text">Order #ORD-2847</div>
+              <div class="fc-order-status">Processing • $84.00</div>
+            </div>
+          </div>
+        </div>
+        <div class="float-card fc-stats">
+          <div class="fc-label">Today's Revenue</div>
+          <div class="fc-value">$3,248</div>
+          <div class="fc-sub"><i class="fas fa-arrow-up"></i> +18.4% vs yesterday</div>
+          <div class="mini-chart">
+            <div class="mini-bar" style="height:30%"></div>
+            <div class="mini-bar" style="height:50%"></div>
+            <div class="mini-bar active" style="height:70%"></div>
+            <div class="mini-bar" style="height:45%"></div>
+            <div class="mini-bar active" style="height:90%"></div>
+            <div class="mini-bar active" style="height:100%"></div>
+            <div class="mini-bar" style="height:65%"></div>
+          </div>
+        </div>
+        <div class="float-card fc-chat">
+          <div class="fc-label" style="margin-bottom:8px">Messages</div>
+          <div class="fc-chat-msg">
+            <div class="fc-chat-av">S</div>
+            <div class="fc-chat-bubble">Is this item still available?</div>
+          </div>
+          <div class="fc-chat-msg sent">
+            <div class="fc-chat-av" style="background:linear-gradient(135deg,#667EEA,#764BA2)">Y</div>
+            <div class="fc-chat-bubble sent">Yes! Ready to ship 🚀</div>
+          </div>
+        </div>
+        <div class="float-card fc-notif">
+          <div class="fc-notif-row">
+            <div class="fc-notif-ic"><i class="fas fa-check"></i></div>
+            <div>
+              <div class="fc-notif-text">Payment Received!</div>
+              <div class="fc-notif-sub">$124.00 from Ahmed K.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ STATS ═══════════════ -->
+<section class="stats" id="stats">
+  <div class="container">
+    <div class="stats-grid stagger">
+      <div class="stat-card fade-up">
+        <div class="stat-icon"><i class="fas fa-users"></i></div>
+        <div class="stat-num" data-target="10000">0</div>
+        <div class="stat-label">Active Users</div>
+        <div class="stat-change"><i class="fas fa-arrow-up"></i> +24% this month</div>
+      </div>
+      <div class="stat-card fade-up">
+        <div class="stat-icon"><i class="fas fa-store"></i></div>
+        <div class="stat-num" data-target="5000">0</div>
+        <div class="stat-label">Verified Sellers</div>
+        <div class="stat-change"><i class="fas fa-arrow-up"></i> +18% this month</div>
+      </div>
+      <div class="stat-card fade-up">
+        <div class="stat-icon"><i class="fas fa-shopping-bag"></i></div>
+        <div class="stat-num" data-target="50000">0</div>
+        <div class="stat-label">Orders Completed</div>
+        <div class="stat-change"><i class="fas fa-arrow-up"></i> +36% this month</div>
+      </div>
+      <div class="stat-card fade-up">
+        <div class="stat-icon"><i class="fas fa-heart"></i></div>
+        <div class="stat-num" data-target="99">0</div>
+        <div class="stat-label">Customer Satisfaction</div>
+        <div class="stat-change"><i class="fas fa-arrow-up"></i> Consistently high</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FEATURES ═══════════════ -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="features-header fade-up">
+      <div class="section-tag"><i class="fas fa-bolt"></i> Platform Features</div>
+      <h2 class="section-title">Powerful Features for<br><span class="gradient-text">Buyers &amp; Sellers</span></h2>
+      <p class="section-sub" style="margin:12px auto 0">Everything you need to buy, sell, and manage in one powerful marketplace ecosystem.</p>
+    </div>
+    <div class="features-grid stagger">
+      <div class="feat-card fade-up"><div class="feat-icon"><i class="fas fa-comments"></i></div><div class="feat-title">Real-time Chat</div><div class="feat-desc">Instant messaging between buyers and sellers with media sharing and read receipts.</div></div>
+      <div class="feat-card fade-up"><div class="feat-icon"><i class="fas fa-shopping-cart"></i></div><div class="feat-title">Product Ordering</div><div class="feat-desc">Seamless multi-vendor cart, instant checkout, and order confirmation system.</div></div>
+      <div class="feat-card fade-up"><div class="feat-icon"><i class="fas fa-calendar-check"></i></div><div class="feat-title">Service Booking</div><div class="feat-desc">Book local and digital services with real-time scheduling and appointment management.</div></div>
+      <div class="feat-card fade-up"><div class="feat-icon"><i class="fas fa-shield-alt"></i></div><div class="feat-title">Secure Payments</div><div class="feat-desc">End-to-end encrypted payments with escrow protection and multiple gateways.</div></div>
+      <div class="feat-card fade-up"><div class="feat-icon"><i class="fas fa-chart-line"></i></div><div class="feat-title">Dashboard Analytics</div><div class="feat-desc">Real-time sales graphs, revenue tracking, and actionable business insights.</div></div>
+      <div class="feat-card fade-up"><div class="feat-icon"><i class="fas fa-bell"></i></div><div class="feat-title">Notification System</div><div class="feat-desc">Smart push, email, and in-app alerts for orders, messages, and promotions.</div></div>
+      <div class="feat-card fade-up"><div class="feat-icon"><i class="fas fa-map-marker-alt"></i></div><div class="feat-title">Order Tracking</div><div class="feat-desc">Live GPS tracking from dispatch to doorstep with real-time status updates.</div></div>
+      <div class="feat-card fade-up"><div class="feat-icon"><i class="fas fa-mobile-alt"></i></div><div class="feat-title">Mobile Friendly</div><div class="feat-desc">Pixel-perfect native iOS and Android apps with offline-first architecture.</div></div>
+      <div class="feat-card fade-up"><div class="feat-icon"><i class="fas fa-layer-group"></i></div><div class="feat-title">Multi Vendor Support</div><div class="feat-desc">Onboard unlimited sellers with independent storefronts, payouts, and management.</div></div>
+      <div class="feat-card fade-up"><div class="feat-icon"><i class="fas fa-bolt"></i></div><div class="feat-title">Fast Delivery</div><div class="feat-desc">Smart routing, delivery partner management, and same-day delivery options.</div></div>
+      <div class="feat-card fade-up"><div class="feat-icon"><i class="fas fa-star"></i></div><div class="feat-title">Ratings &amp; Reviews</div><div class="feat-desc">Verified buyer reviews, star ratings, and transparent seller reputation scores.</div></div>
+      <div class="feat-card fade-up"><div class="feat-icon"><i class="fas fa-search"></i></div><div class="feat-title">Smart Search &amp; Filters</div><div class="feat-desc">AI-powered search with category filters, price ranges, and personalized results.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ APP SHOWCASE ═══════════════ -->
+<section class="app-showcase" id="app">
+  <div class="container">
+    <div class="app-header fade-up">
+      <div class="section-tag" style="background:rgba(229,150,0,.15);color:var(--orange-light)"><i class="fas fa-mobile-alt"></i> Mobile App</div>
+      <h2 class="section-title" style="color:#fff">Your Marketplace<br><span class="gradient-text">In Your Pocket</span></h2>
+      <p class="section-sub" style="color:rgba(255,255,255,.65);margin:12px auto 0">A seamless shopping and service booking experience designed for modern users.</p>
+    </div>
+    <div class="phones-wrap fade-in">
+      <!-- Phone 1: Home -->
+      <div class="phone-mock left">
+        <div class="phone-frame">
+          <div class="phone-inner">
+            <div class="phone-screen-content">
+              <div class="ps-header"><span class="ps-title">Businesskal</span><div class="ps-notif"><i class="fas fa-bell"></i></div></div>
+              <p class="ps-greeting">Good morning, Ahmed 👋</p>
+              <div class="ps-search"><i class="fas fa-search" style="color:var(--gray-400);font-size:9px"></i> Search anything…</div>
+              <div class="ps-banner"><div><div class="ps-banner-title">Today's Top Deals</div><div class="ps-banner-sub">Up to 40% off selected items</div></div><span class="ps-banner-ic">🛍️</span></div>
+              <div class="ps-section-title">Popular Now</div>
+              <div class="ps-grid">
+                <div class="ps-item"><div class="ps-item-img">📱</div><div class="ps-item-info"><div class="ps-item-name">iPhone 15 Case</div><div class="ps-item-price">$12.99</div></div></div>
+                <div class="ps-item"><div class="ps-item-img">🎧</div><div class="ps-item-info"><div class="ps-item-name">Wireless Buds</div><div class="ps-item-price">$49.99</div></div></div>
+                <div class="ps-item"><div class="ps-item-img">👟</div><div class="ps-item-info"><div class="ps-item-name">Air Sneakers</div><div class="ps-item-price">$89.00</div></div></div>
+                <div class="ps-item"><div class="ps-item-img">⌚</div><div class="ps-item-info"><div class="ps-item-name">Smart Watch</div><div class="ps-item-price">$199.00</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Phone 2: Booking (center) -->
+      <div class="phone-mock center">
+        <div class="phone-frame">
+          <div class="phone-inner">
+            <div class="phone-screen-content screen-booking">
+              <div class="ps-header"><span class="ps-title">Book a Service</span><div class="ps-notif"><i class="fas fa-sliders-h"></i></div></div>
+              <p class="ps-greeting">Available near you</p>
+              <div class="ps-search"><i class="fas fa-search" style="color:var(--gray-400);font-size:9px"></i> Search services…</div>
+              <div class="ps-service">
+                <div class="ps-service-ic"><i class="fas fa-broom"></i></div>
+                <div><div class="ps-service-name">Home Cleaning</div><div class="ps-service-price">$35/hr</div><div class="ps-service-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> (128)</div></div>
+              </div>
+              <div class="ps-service">
+                <div class="ps-service-ic"><i class="fas fa-wrench"></i></div>
+                <div><div class="ps-service-name">AC Repair</div><div class="ps-service-price">$60/visit</div><div class="ps-service-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i> (84)</div></div>
+              </div>
+              <div class="ps-service">
+                <div class="ps-service-ic"><i class="fas fa-cut"></i></div>
+                <div><div class="ps-service-name">Haircut at Home</div><div class="ps-service-price">$25/session</div><div class="ps-service-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> (210)</div></div>
+              </div>
+              <button class="ps-book-btn">Book Now →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Phone 3: Chat -->
+      <div class="phone-mock right">
+        <div class="phone-frame">
+          <div class="phone-inner">
+            <div class="phone-screen-content screen-chat">
+              <div class="ps-header"><span class="ps-title">Messages</span><div class="ps-notif"><i class="fas fa-edit"></i></div></div>
+              <p class="ps-greeting" style="margin-bottom:10px">Active now</p>
+              <div class="ps-msg">
+                <div class="ps-msg-av">S</div>
+                <div class="ps-msg-bubble">Hi! Is the laptop bag available in black?</div>
+              </div>
+              <div class="ps-msg sent">
+                <div class="ps-msg-av" style="background:linear-gradient(135deg,#667EEA,#764BA2)">Y</div>
+                <div class="ps-msg-bubble sent">Yes! We have it in black and navy blue 🎒</div>
+              </div>
+              <div class="ps-msg">
+                <div class="ps-msg-av">S</div>
+                <div class="ps-msg-bubble">Can I get it delivered tomorrow?</div>
+              </div>
+              <div class="ps-msg sent">
+                <div class="ps-msg-av" style="background:linear-gradient(135deg,#667EEA,#764BA2)">Y</div>
+                <div class="ps-msg-bubble sent">Absolutely! Same-day available ✅</div>
+              </div>
+              <div class="ps-msg">
+                <div class="ps-msg-av">S</div>
+                <div class="ps-msg-bubble">Perfect, adding to cart now!</div>
+              </div>
+              <div style="margin-top:8px;display:flex;gap:6px;">
+                <div style="flex:1;background:var(--gray-100);border-radius:20px;padding:8px 10px;font-size:9px;color:var(--gray-400)">Type a message…</div>
+                <div style="width:28px;height:28px;background:linear-gradient(135deg,var(--orange),var(--orange-dark));border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;flex-shrink:0"><i class="fas fa-paper-plane"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="app-store-btns fade-up">
+      <a href="#" class="store-btn">
+        <i class="fab fa-apple"></i>
+        <div class="store-btn-text">
+          <small>Download on the</small>
+          <strong>App Store</strong>
+        </div>
+      </a>
+      <a href="#" class="store-btn">
+        <i class="fab fa-google-play"></i>
+        <div class="store-btn-text">
+          <small>Get it on</small>
+          <strong>Google Play</strong>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ DASHBOARD ═══════════════ -->
+<section class="dashboard" id="sellers">
+  <div class="container">
+    <div class="dash-inner">
+      <div class="fade-up">
+        <div class="section-tag"><i class="fas fa-tachometer-alt"></i> Seller Dashboard</div>
+        <h2 class="section-title">Manage Your Entire<br><span class="gradient-text">Business Smartly</span></h2>
+        <p class="section-sub" style="margin:16px 0 28px">One powerful dashboard to track sales, manage products, handle orders, communicate with customers, and grow your revenue.</p>
+        <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:32px">
+          <div style="display:flex;align-items:center;gap:12px"><div style="width:36px;height:36px;background:var(--orange-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--orange);flex-shrink:0"><i class="fas fa-chart-bar"></i></div><div><strong style="display:block;font-size:14px">Real-time Analytics</strong><span style="font-size:13px;color:var(--gray-600)">Live revenue, orders, and performance charts</span></div></div>
+          <div style="display:flex;align-items:center;gap:12px"><div style="width:36px;height:36px;background:var(--orange-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--orange);flex-shrink:0"><i class="fas fa-box"></i></div><div><strong style="display:block;font-size:14px">Product &amp; Service Management</strong><span style="font-size:13px;color:var(--gray-600)">Add, edit, and manage your entire catalog</span></div></div>
+          <div style="display:flex;align-items:center;gap:12px"><div style="width:36px;height:36px;background:var(--orange-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--orange);flex-shrink:0"><i class="fas fa-comments"></i></div><div><strong style="display:block;font-size:14px">Customer Communication</strong><span style="font-size:13px;color:var(--gray-600)">Direct messaging and support inbox</span></div></div>
+          <div style="display:flex;align-items:center;gap:12px"><div style="width:36px;height:36px;background:var(--orange-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--orange);flex-shrink:0"><i class="fas fa-wallet"></i></div><div><strong style="display:block;font-size:14px">Instant Payouts</strong><span style="font-size:13px;color:var(--gray-600)">Withdraw earnings directly to your bank</span></div></div>
+        </div>
+        <a href="#cta" class="btn btn-primary"><i class="fas fa-rocket"></i> Start Selling Today</a>
+      </div>
+      <div class="dash-preview fade-up">
+        <div class="dash-topbar">
+          <div class="dash-logo-bar">
+            <div class="dash-logo-dot"></div>
+            Businesskal Seller
+          </div>
+          <div class="dash-actions">
+            <div class="dash-action-btn"><i class="fas fa-bell"></i></div>
+            <div class="dash-action-btn"><i class="fas fa-cog"></i></div>
+            <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--orange-dark));display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700">A</div>
+          </div>
+        </div>
+        <div class="dash-body">
+          <div class="dash-sidebar">
+            <div class="dash-nav-item active"><i class="fas fa-home"></i> Dashboard</div>
+            <div class="dash-nav-item"><i class="fas fa-shopping-bag"></i> Orders</div>
+            <div class="dash-nav-item"><i class="fas fa-box"></i> Products</div>
+            <div class="dash-nav-item"><i class="fas fa-calendar"></i> Services</div>
+            <div class="dash-nav-item"><i class="fas fa-chart-line"></i> Analytics</div>
+            <div class="dash-nav-item"><i class="fas fa-comments"></i> Messages</div>
+            <div class="dash-nav-item"><i class="fas fa-wallet"></i> Earnings</div>
+            <div class="dash-nav-item"><i class="fas fa-cog"></i> Settings</div>
+          </div>
+          <div class="dash-content">
+            <div class="dash-rev-cards">
+              <div class="dash-rev-card"><div class="dash-rev-label">Revenue</div><div class="dash-rev-val">$8,420</div><div class="dash-rev-badge"><i class="fas fa-arrow-up"></i> +22%</div></div>
+              <div class="dash-rev-card"><div class="dash-rev-label">Orders</div><div class="dash-rev-val">184</div><div class="dash-rev-badge"><i class="fas fa-arrow-up"></i> +15%</div></div>
+              <div class="dash-rev-card"><div class="dash-rev-label">Products</div><div class="dash-rev-val">47</div><div class="dash-rev-badge"><i class="fas fa-arrow-up"></i> Active</div></div>
+            </div>
+            <div class="dash-chart">
+              <div class="dash-chart-header">
+                <span class="dash-chart-title">Weekly Sales</span>
+                <span style="font-size:9px;color:var(--gray-600)">This Week</span>
+              </div>
+              <div class="chart-bars">
+                <div class="chart-bar" style="height:40%"></div>
+                <div class="chart-bar fill" style="height:65%"></div>
+                <div class="chart-bar" style="height:50%"></div>
+                <div class="chart-bar fill" style="height:80%"></div>
+                <div class="chart-bar fill" style="height:70%"></div>
+                <div class="chart-bar fill" style="height:95%"></div>
+                <div class="chart-bar" style="height:60%"></div>
+              </div>
+            </div>
+            <div class="dash-orders">
+              <div class="dash-orders-head">Recent Orders</div>
+              <div class="dash-order-row"><span class="order-id">#2847</span><span class="order-name">iPhone Case × 2</span><span class="order-amount">$25.98</span><span class="order-badge badge-paid">Paid</span></div>
+              <div class="dash-order-row"><span class="order-id">#2846</span><span class="order-name">Wireless Buds</span><span class="order-amount">$49.99</span><span class="order-badge badge-shipping">Shipping</span></div>
+              <div class="dash-order-row"><span class="order-id">#2845</span><span class="order-name">Cleaning Service</span><span class="order-amount">$70.00</span><span class="order-badge badge-pending">Pending</span></div>
+              <div class="dash-order-row"><span class="order-id">#2844</span><span class="order-name">Fashion Bag</span><span class="order-amount">$55.00</span><span class="order-badge badge-paid">Paid</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ HOW IT WORKS ═══════════════ -->
+<section class="how" id="how">
+  <div class="container">
+    <div class="how-header fade-up">
+      <div class="section-tag"><i class="fas fa-map"></i> How It Works</div>
+      <h2 class="section-title">Get Started in<br><span class="gradient-text">4 Simple Steps</span></h2>
+      <p class="section-sub" style="margin:12px auto 0">From sign-up to your first order in minutes. It's that simple.</p>
+    </div>
+    <div class="steps-wrap stagger">
+      <div class="step fade-up">
+        <div class="step-num-wrap">
+          <div class="step-circle">1</div>
+          <div class="step-icon-badge"><i class="fas fa-user-plus"></i></div>
+        </div>
+        <h3 class="step-title">Create Account</h3>
+        <p class="step-desc">Sign up in seconds with your email or social media account. Verify and you're in.</p>
+      </div>
+      <div class="step fade-up">
+        <div class="step-num-wrap">
+          <div class="step-circle">2</div>
+          <div class="step-icon-badge"><i class="fas fa-search"></i></div>
+        </div>
+        <h3 class="step-title">Browse Products &amp; Services</h3>
+        <p class="step-desc">Explore thousands of products and services from verified sellers in your area.</p>
+      </div>
+      <div class="step fade-up">
+        <div class="step-num-wrap">
+          <div class="step-circle">3</div>
+          <div class="step-icon-badge"><i class="fas fa-shopping-cart"></i></div>
+        </div>
+        <h3 class="step-title">Place Orders or Book Services</h3>
+        <p class="step-desc">Add to cart and checkout, or book your preferred service with one tap.</p>
+      </div>
+      <div class="step fade-up">
+        <div class="step-num-wrap">
+          <div class="step-circle">4</div>
+          <div class="step-icon-badge"><i class="fas fa-check-double"></i></div>
+        </div>
+        <h3 class="step-title">Track &amp; Manage Everything</h3>
+        <p class="step-desc">Monitor delivery live, manage bookings, and rate your experience — all in one place.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ MARKETPLACE ═══════════════ -->
+<section class="marketplace" id="products">
+  <div class="container">
+    <div class="market-header fade-up">
+      <div class="section-tag"><i class="fas fa-th-large"></i> Marketplace</div>
+      <h2 class="section-title">Explore Products<br>&amp; <span class="gradient-text">Services</span></h2>
+      <p class="section-sub" style="margin:12px auto 0">Thousands of listings across categories. Find exactly what you need.</p>
+    </div>
+    <div class="cat-filters fade-up">
+      <button class="cat-filter active">All</button>
+      <button class="cat-filter">📱 Electronics</button>
+      <button class="cat-filter">🏠 Home Services</button>
+      <button class="cat-filter">🍕 Food</button>
+      <button class="cat-filter">👗 Fashion</button>
+      <button class="cat-filter">🧹 Cleaning</button>
+      <button class="cat-filter">💻 Digital Services</button>
+      <button class="cat-filter">💄 Beauty</button>
+      <button class="cat-filter">🔧 Repairs</button>
+    </div>
+    <div class="market-grid stagger">
+      <div class="market-card fade-up">
+        <div class="card-img">📱<div class="card-fav"><i class="fas fa-heart"></i></div><div class="card-badge">Hot</div></div>
+        <div class="card-body">
+          <div class="card-seller"><div class="seller-av">T</div><span class="seller-name">TechWorld Store</span></div>
+          <div class="card-title">Wireless Earbuds Pro Max</div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">4.9 (231)</span></div>
+          <div class="card-footer"><div class="card-price">$49.99<small>/each</small></div><button class="add-cart-btn"><i class="fas fa-plus"></i></button></div>
+        </div>
+      </div>
+      <div class="market-card fade-up">
+        <div class="card-img service" style="font-size:40px">🧹<div class="card-fav"><i class="fas fa-heart"></i></div></div>
+        <div class="card-body">
+          <div class="card-seller"><div class="seller-av" style="background:linear-gradient(135deg,#4ECDC4,#44A08D)">C</div><span class="seller-name">CleanPro Services</span></div>
+          <div class="card-title">Deep Home Cleaning Service</div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">5.0 (128)</span></div>
+          <div class="card-footer"><div class="card-price">$35<small>/hr</small></div><button class="add-cart-btn"><i class="fas fa-plus"></i></button></div>
+        </div>
+      </div>
+      <div class="market-card fade-up">
+        <div class="card-img food" style="font-size:40px">🍕<div class="card-fav"><i class="fas fa-heart"></i></div><div class="card-badge">New</div></div>
+        <div class="card-body">
+          <div class="card-seller"><div class="seller-av" style="background:linear-gradient(135deg,#FF6B6B,#FF8E53)">P</div><span class="seller-name">Pizza Palace</span></div>
+          <div class="card-title">Mega Cheese Pizza Combo</div>
+          <div class="card-rating"><span class="stars">★★★★☆</span><span class="rating-num">4.7 (319)</span></div>
+          <div class="card-footer"><div class="card-price">$18.50<small>/box</small></div><button class="add-cart-btn"><i class="fas fa-plus"></i></button></div>
+        </div>
+      </div>
+      <div class="market-card fade-up">
+        <div class="card-img fashion" style="font-size:40px">👗<div class="card-fav active"><i class="fas fa-heart"></i></div></div>
+        <div class="card-body">
+          <div class="card-seller"><div class="seller-av" style="background:linear-gradient(135deg,#667EEA,#764BA2)">F</div><span class="seller-name">Fashion Hub</span></div>
+          <div class="card-title">Premium Linen Summer Dress</div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">4.8 (94)</span></div>
+          <div class="card-footer"><div class="card-price">$64.00<small>/pcs</small></div><button class="add-cart-btn"><i class="fas fa-plus"></i></button></div>
+        </div>
+      </div>
+      <div class="market-card fade-up">
+        <div class="card-img" style="background:linear-gradient(135deg,#D1FAE5,#6EE7B7);font-size:40px">💻<div class="card-fav"><i class="fas fa-heart"></i></div><div class="card-badge">Sale</div></div>
+        <div class="card-body">
+          <div class="card-seller"><div class="seller-av" style="background:linear-gradient(135deg,#10B981,#059669)">D</div><span class="seller-name">DevFreelancer</span></div>
+          <div class="card-title">Professional Logo Design</div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">5.0 (67)</span></div>
+          <div class="card-footer"><div class="card-price">$25<small>/logo</small></div><button class="add-cart-btn"><i class="fas fa-plus"></i></button></div>
+        </div>
+      </div>
+      <div class="market-card fade-up">
+        <div class="card-img" style="background:linear-gradient(135deg,#FEE2E2,#FECACA);font-size:40px">💆<div class="card-fav"><i class="fas fa-heart"></i></div></div>
+        <div class="card-body">
+          <div class="card-seller"><div class="seller-av" style="background:linear-gradient(135deg,#F43F5E,#E11D48)">B</div><span class="seller-name">Beauty Studio</span></div>
+          <div class="card-title">Full Body Spa Treatment</div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">4.9 (156)</span></div>
+          <div class="card-footer"><div class="card-price">$80<small>/session</small></div><button class="add-cart-btn"><i class="fas fa-plus"></i></button></div>
+        </div>
+      </div>
+      <div class="market-card fade-up">
+        <div class="card-img" style="background:linear-gradient(135deg,#FEF3C7,#FDE68A);font-size:40px">🔧<div class="card-fav"><i class="fas fa-heart"></i></div></div>
+        <div class="card-body">
+          <div class="card-seller"><div class="seller-av" style="background:linear-gradient(135deg,#F59E0B,#D97706)">R</div><span class="seller-name">RepairMaster</span></div>
+          <div class="card-title">Phone Screen Repair &amp; Fix</div>
+          <div class="card-rating"><span class="stars">★★★★☆</span><span class="rating-num">4.6 (89)</span></div>
+          <div class="card-footer"><div class="card-price">$45<small>/repair</small></div><button class="add-cart-btn"><i class="fas fa-plus"></i></button></div>
+        </div>
+      </div>
+      <div class="market-card fade-up">
+        <div class="card-img" style="background:linear-gradient(135deg,#E0E7FF,#C7D2FE);font-size:40px">⌚<div class="card-fav"><i class="fas fa-heart"></i></div><div class="card-badge">Top</div></div>
+        <div class="card-body">
+          <div class="card-seller"><div class="seller-av" style="background:linear-gradient(135deg,#6366F1,#4F46E5)">W</div><span class="seller-name">WatchWorld</span></div>
+          <div class="card-title">Smart Watch Series X Pro</div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">4.9 (412)</span></div>
+          <div class="card-footer"><div class="card-price">$199<small>/unit</small></div><button class="add-cart-btn"><i class="fas fa-plus"></i></button></div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px" class="fade-up">
+      <a href="#" class="btn btn-outline"><i class="fas fa-th-large"></i> View All Listings</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ TESTIMONIALS ═══════════════ -->
+<section class="testimonials">
+  <div class="container">
+    <div class="test-header fade-up">
+      <div class="section-tag"><i class="fas fa-star"></i> Testimonials</div>
+      <h2 class="section-title">Loved by Buyers<br>&amp; <span class="gradient-text">Sellers Alike</span></h2>
+      <p class="section-sub" style="margin:12px auto 0">Real stories from real people who use Businesskal every day.</p>
+    </div>
+    <div class="test-grid stagger">
+      <div class="test-card fade-up">
+        <span class="test-quote">"</span>
+        <div class="test-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+        <p class="test-text">Businesskal completely transformed how I run my home cleaning business. The dashboard is intuitive, orders are easy to manage, and payments are always on time.</p>
+        <div class="test-user"><div class="test-av">F</div><div><div class="test-name">Fatima Al-Hassan</div><div class="test-role">Cleaning Service Provider · 2 years on platform</div></div></div>
+      </div>
+      <div class="test-card fade-up">
+        <span class="test-quote">"</span>
+        <div class="test-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+        <p class="test-text">I've tried many marketplace apps but Businesskal is the best. The chat feature, fast delivery tracking, and smooth checkout make it my go-to for everything.</p>
+        <div class="test-user"><div class="test-av" style="background:linear-gradient(135deg,#667EEA,#764BA2)">A</div><div><div class="test-name">Ahmed Malik</div><div class="test-role">Regular Buyer · 500+ orders placed</div></div></div>
+      </div>
+      <div class="test-card fade-up">
+        <span class="test-quote">"</span>
+        <div class="test-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+        <p class="test-text">As a digital designer, Businesskal gave me access to thousands of clients. My monthly revenue has grown by 300% since joining. The seller tools are world-class.</p>
+        <div class="test-user"><div class="test-av" style="background:linear-gradient(135deg,#10B981,#059669)">K</div><div><div class="test-name">Kofi Mensah</div><div class="test-role">Digital Service Seller · Top Rated</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CTA BANNER ═══════════════ -->
+<section class="cta-banner" id="cta">
+  <div class="cta-float-shape cfs1"></div>
+  <div class="cta-float-shape cfs2"></div>
+  <div class="cta-float-shape cfs3"></div>
+  <div class="cta-float-shape cfs4"></div>
+  <div class="container">
+    <div class="cta-banner-inner fade-up">
+      <div class="section-tag" style="background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.3);margin-bottom:20px"><i class="fas fa-rocket"></i> Join Thousands of Sellers</div>
+      <h2 class="cta-banner-title">Start Selling Today</h2>
+      <p class="cta-banner-sub">Launch your products and services to thousands of customers. Setup takes less than 5 minutes.</p>
+      <div class="cta-banner-btns">
+        <a href="#" class="btn btn-white"><i class="fas fa-store"></i> Become a Seller</a>
+        <a href="#contact" class="btn btn-ghost"><i class="fas fa-phone"></i> Contact Sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer id="contact">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <div class="nav-logo-icon"><i class="fas fa-store"></i></div>
+          <span>Businesskal</span>
+        </div>
+        <p>The all-in-one multi-vendor marketplace for products, services, and digital goods. Connect buyers with trusted sellers.</p>
+        <div class="social-links">
+          <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4>Platform</h4>
+        <ul class="footer-links">
+          <li><a href="#">How It Works</a></li>
+          <li><a href="#">Features</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Mobile App</a></li>
+          <li><a href="#">Seller Dashboard</a></li>
+          <li><a href="#">API Docs</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul class="footer-links">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Partners</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+        <h4 style="margin-top:20px">Contact</h4>
+        <div class="footer-contact">
+          <div class="contact-item"><i class="fas fa-envelope"></i><span>hello@businesskal.com</span></div>
+          <div class="contact-item"><i class="fas fa-phone"></i><span>+1 (800) 123-4567</span></div>
+          <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>123 Market St, San Francisco, CA</span></div>
+        </div>
+      </div>
+      <div>
+        <h4>Newsletter</h4>
+        <div class="newsletter">
+          <p>Get the latest updates, deals, and marketplace news delivered to your inbox.</p>
+          <div class="newsletter-form">
+            <input type="email" class="newsletter-input" placeholder="Your email"/>
+            <button class="newsletter-btn"><i class="fas fa-paper-plane"></i></button>
+          </div>
+        </div>
+        <h4 style="margin-top:24px">Legal</h4>
+        <ul class="footer-links">
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 <a href="#">Businesskal</a>. All rights reserved. Made with ❤️ for sellers worldwide.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+        <a href="#">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Navbar scroll
+const nav=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',scrollY>40)});
+
+// ── Mobile menu
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
+
+// ── Category filter tabs
+document.querySelectorAll('.cat-filter').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.cat-filter').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+// ── Favorite toggle
+document.querySelectorAll('.card-fav').forEach(btn=>{
+  btn.addEventListener('click',()=>btn.classList.toggle('active'));
+});
+
+// ── Intersection Observer for scroll animations
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+},{threshold:0.1});
+document.querySelectorAll('.fade-up,.fade-in').forEach(el=>observer.observe(el));
+
+// ── Counter animation
+function animateCounter(el){
+  const target=parseInt(el.dataset.target);
+  const duration=2000;
+  const step=target/60;
+  let current=0;
+  const isPercent=target===99;
+  const format=n=>{
+    if(n>=10000)return(n/1000).toFixed(0)+'K+';
+    if(n>=1000)return(n/1000).toFixed(0)+'K+';
+    if(isPercent)return Math.min(Math.round(n),target)+'%';
+    return Math.round(n).toLocaleString()+'+';
+  };
+  const tick=()=>{
+    current=Math.min(current+step,target);
+    el.textContent=format(current);
+    if(current<target)requestAnimationFrame(tick);
+  };
+  tick();
+}
+
+const counterObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      animateCounter(e.target);
+      counterObs.unobserve(e.target);
+    }
+  });
+},{threshold:0.5});
+document.querySelectorAll('[data-target]').forEach(el=>counterObs.observe(el));
+
+// ── Chart bars animate on visible
+const chartObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.chart-bar').forEach((bar,i)=>{
+        const h=bar.style.height;
+        bar.style.height='0';
+        setTimeout(()=>{bar.style.transition='height .5s ease';bar.style.height=h;},i*60+200);
+      });
+      chartObs.unobserve(e.target);
+    }
+  });
+},{threshold:0.3});
+document.querySelectorAll('.chart-bars').forEach(el=>chartObs.observe(el));
+
+// ── Add to cart feedback
+document.querySelectorAll('.add-cart-btn').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    const orig=this.innerHTML;
+    this.innerHTML='<i class="fas fa-check"></i>';
+    this.style.background='linear-gradient(135deg,#22C55E,#16A34A)';
+    setTimeout(()=>{this.innerHTML=orig;this.style.background='';},1500);
+  });
+});
+</script>
+</body>
+</html>
